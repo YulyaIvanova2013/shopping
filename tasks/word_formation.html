@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Word Formation Practice SHOPPING & POCKET MONEY</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg1: #f5f9ff;
+      --bg2: #eaf2ff;
+      --card: #ffffff;
+      --line: #dbe8ff;
+      --accent: #2f7bff;
+      --accent-2: #f0b800;
+      --accent-3: #1f5fe0;
+      --text: #1f2a44;
+      --muted: #44506b;
+      --ok: #23b26d;
+      --bad: #e24b5b;
+      --soft: #fff4b8;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+      color: var(--text);
+    }
+    body {
+      min-height: 100vh;
+      padding: 12px;
+    }
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 24px;
+      overflow: hidden;
+      border: 3px solid #dbe8ff;
+      box-shadow: 0 14px 36px rgba(38, 72, 120, 0.15);
+    }
+    .header {
+      padding: 20px 18px 18px;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-3) 100%);
+      color: #fff;
+    }
+    .header h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      line-height: 1.15;
+    }
+    .header p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+    .content {
+      padding: 16px;
+    }
+    .intro {
+      background: linear-gradient(180deg, #fff8d8 0%, #ffe989 100%);
+      border: 2px solid #ffd84a;
+      border-radius: 18px;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .pill {
+      padding: 10px 14px;
+      background: #eaf2ff;
+      border: 2px solid #cfe0ff;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      color: #1f5fe0;
+    }
+    .section {
+      display: none;
+      background: linear-gradient(180deg, #f7faff 0%, #eef6ff 100%);
+      border: 2px solid var(--line);
+      border-radius: 20px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .section.active { display: block; }
+    .section-title {
+      display: inline-block;
+      margin: 0 0 14px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent-2) 0%, var(--accent) 100%);
+      color: #fff;
+      font-size: 20px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .task {
+      background: #fff;
+      border: 2px solid #dbe8ff;
+      border-radius: 18px;
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+    .task-top {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .num {
+      width: 40px;
+      min-width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-3) 100%);
+      color: #fff;
+      font-weight: 800;
+      font-size: 18px;
+      box-shadow: 0 6px 14px rgba(139, 92, 246, 0.2);
+    }
+    .sentence {
+      font-size: 18px;
+      line-height: 1.65;
+      font-weight: 700;
+      word-break: break-word;
+    }
+    .prompt {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 6px 10px;
+      background: #eaf2ff;
+      border: 2px solid #cfe0ff;
+      border-radius: 999px;
+      color: #b23a69;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: .2px;
+    }
+    .answer-input {
+      display: inline-block;
+      width: 180px;
+      max-width: 100%;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 2px solid #bed1fb;
+      background: #fffdf4;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      outline: none;
+      margin: 4px 4px;
+      vertical-align: middle;
+    }
+    .answer-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(47, 123, 255, 0.12);
+    }
+    .correct {
+      border-color: var(--ok) !important;
+      background: #effcf4 !important;
+    }
+    .wrong {
+      border-color: var(--bad) !important;
+      background: #fff1f1 !important;
+    }
+    .explanation {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      background: #fff8d8;
+      border: 2px solid #ffd84a;
+      border-radius: 14px;
+      font-size: 15px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+    .explanation.visible { display: block; }
+    .answer-line {
+      color: var(--ok);
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+    .section-controls,
+    .nav-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    button {
+      border: none;
+      border-radius: 14px;
+      padding: 14px 18px;
+      min-height: 48px;
+      font-size: 16px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-3) 100%);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(139, 92, 246, 0.2);
+    }
+    .secondary {
+      background: linear-gradient(135deg, #ffd86b 0%, #ffae4a 100%);
+      color: #3a2b11;
+    }
+    .ghost {
+      background: #dfe9ff;
+      color: #1f2a44;
+      border: 2px solid #cfe0ff;
+    }
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+    .result {
+      font-size: 18px;
+      font-weight: 800;
+    }
+    .footer-note {
+      margin: 0 16px 16px;
+      background: #eaf2ff;
+      border: 2px solid #cfe0ff;
+      border-radius: 18px;
+      padding: 14px;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    @media (max-width: 700px) {
+      body { padding: 8px; }
+      .wrap { border-radius: 18px; }
+      .header { padding: 16px 14px; }
+      .header h1 { font-size: 23px; }
+      .header p { font-size: 14px; }
+      .content { padding: 12px; }
+      .intro { font-size: 15px; padding: 12px; }
+      .section { padding: 10px; border-radius: 16px; }
+      .section-title { font-size: 18px; padding: 9px 12px; }
+      .task { padding: 10px; border-radius: 14px; }
+      .sentence { font-size: 16px; line-height: 1.6; }
+      .answer-input {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        font-size: 16px;
+      }
+      .prompt { margin-top: 6px; font-size: 12px; }
+      .buttons, .nav-controls { width: 100%; }
+      .buttons button, .nav-controls button { flex: 1 1 100%; width: 100%; }
+      .section-controls, .nav-controls { align-items: stretch; }
+      .result { font-size: 16px; width: 100%; }
+    }
+    @media (max-width: 400px) {
+      .header h1 { font-size: 21px; }
+      .sentence { font-size: 15px; }
+      .num { width: 36px; min-width: 36px; height: 36px; font-size: 16px; }
+      button { font-size: 15px; padding: 13px 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1>Word Formation Practice SHOPPING & POCKET MONEY</h1>
+      <p>Словообразование: проверь ответы и посмотри короткие понятные пояснения.</p>
+    </div>
+
+    <div class="content">
+      <div class="intro">
+        Прочитайте текст. Преобразуйте слова, напечатанные заглавными буквами, так, чтобы они лексически соответствовали содержанию текста.
+      </div>
+
+      <div class="topbar">
+        <div class="pill" id="pageCounter">Page 1 / 5</div>
+        <div class="pill" id="pageResult">Score: 0 / 6</div>
+      </div>
+
+      <section class="section active" data-section="0">
+        <h2 class="section-title">Furniture Store</h2>
+
+        <div class="task"><div class="task-top"><div class="num">1</div><div>
+          <div class="sentence">Mum couldn't make a <input class="answer-input" data-answer="decision" /> about what she liked best.</div>
+          <div class="prompt">DECIDE</div>
+          <div class="explanation"><div class="answer-line">Correct answer: decision</div><div>После make a нужно существительное. Decision = решение.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">2</div><div>
+          <div class="sentence">There were sofas in <input class="answer-input" data-answer="traditional" /> and modern styles, in different colours and patterns.</div>
+          <div class="prompt">TRADITION</div>
+          <div class="explanation"><div class="answer-line">Correct answer: traditional</div><div>Нужно прилагательное перед styles. Traditional = традиционный.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">3</div><div>
+          <div class="sentence">There were sofas in traditional and modern styles, in <input class="answer-input" data-answer="different" /> colours and patterns.</div>
+          <div class="prompt">DIFFER</div>
+          <div class="explanation"><div class="answer-line">Correct answer: different</div><div>Нужно прилагательное перед colours. Different = разные.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">4</div><div>
+          <div class="sentence">The shop <input class="answer-input" data-answer="assistant" /> spoke very patiently and showed us one model after another.</div>
+          <div class="prompt">ASSIST</div>
+          <div class="explanation"><div class="answer-line">Correct answer: assistant</div><div>Нужно существительное: shop assistant = продавец-консультант.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">5</div><div>
+          <div class="sentence">At last Mum chose one of them, but, <input class="answer-input" data-answer="unfortunately" />, they didn’t have that model in her favourite colour.</div>
+          <div class="prompt">FORTUNATELY</div>
+          <div class="explanation"><div class="answer-line">Correct answer: unfortunately</div><div>По смыслу нужна отрицательная форма и наречие: unfortunately = к сожалению.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">6</div><div>
+          <div class="sentence">They didn’t have that model in her <input class="answer-input" data-answer="favourite" /> colour.</div>
+          <div class="prompt">FAVOUR</div>
+          <div class="explanation"><div class="answer-line">Correct answer: favourite</div><div>Нужно прилагательное перед colour. Favourite = любимый.</div></div>
+        </div></div></div>
+
+        <div class="section-controls"><div class="buttons">
+          <button class="check-btn primary">Check answers</button>
+          <button class="show-btn secondary">Show explanations</button>
+          <button class="reset-btn ghost">Reset page</button>
+        </div></div>
+      </section>
+
+      <section class="section" data-section="1">
+        <h2 class="section-title">Shopping in London</h2>
+
+        <div class="task"><div class="task-top"><div class="num">1</div><div>
+          <div class="sentence">The best thing about shopping in London is that there really are hundreds of cool shops selling <input class="answer-input" data-answer="fashionable" /> clothes.</div>
+          <div class="prompt">FASHION</div>
+          <div class="explanation"><div class="answer-line">Correct answer: fashionable</div><div>Нужно прилагательное к слову clothes. Fashionable = модный.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">2</div><div>
+          <div class="sentence">Only here you can find a wide choice of <input class="answer-input" data-answer="original" /> and unique shops.</div>
+          <div class="prompt">ORIGIN</div>
+          <div class="explanation"><div class="answer-line">Correct answer: original</div><div>Нужно прилагательное перед shops. Original = оригинальный.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">3</div><div>
+          <div class="sentence">Sometimes you can buy <input class="answer-input" data-answer="fantastic" /> things there.</div>
+          <div class="prompt">FANTASY</div>
+          <div class="explanation"><div class="answer-line">Correct answer: fantastic</div><div>Нужно прилагательное к things. От fantasy образуется fantastic.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">4</div><div>
+          <div class="sentence">You can spend a whole day in a shopping centre, have lunch in one of the European or <input class="answer-input" data-answer="English" /> restaurants...</div>
+          <div class="prompt">ENGLAND</div>
+          <div class="explanation"><div class="answer-line">Correct answer: English</div><div>Нужно прилагательное от названия страны: English = английский.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">5</div><div>
+          <div class="sentence">...see a new film in the cinema and even enjoy a <input class="answer-input" data-answer="performance" />.</div>
+          <div class="prompt">PERFORM</div>
+          <div class="explanation"><div class="answer-line">Correct answer: performance</div><div>После enjoy a нужно существительное. Performance = представление.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">6</div><div>
+          <div class="sentence">But be <input class="answer-input" data-answer="careful" /> – London shops are expensive!</div>
+          <div class="prompt">CARE</div>
+          <div class="explanation"><div class="answer-line">Correct answer: careful</div><div>После be нужно прилагательное. Careful = осторожный.</div></div>
+        </div></div></div>
+
+        <div class="section-controls"><div class="buttons">
+          <button class="check-btn primary">Check answers</button>
+          <button class="show-btn secondary">Show explanations</button>
+          <button class="reset-btn ghost">Reset page</button>
+        </div></div>
+      </section>
+
+      <section class="section" data-section="2">
+        <h2 class="section-title">Online Business</h2>
+
+        <div class="task"><div class="task-top"><div class="num">1</div><div>
+          <div class="sentence">They sell goods and services, or provide <input class="answer-input" data-answer="information" /> to the general public.</div>
+          <div class="prompt">INFORM</div>
+          <div class="explanation"><div class="answer-line">Correct answer: information</div><div>Нужно существительное после provide. Information = информация.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">2</div><div>
+          <div class="sentence">Doing business online is less <input class="answer-input" data-answer="expensive" /> and more convenient than running a traditional business.</div>
+          <div class="prompt">EXPENSE</div>
+          <div class="explanation"><div class="answer-line">Correct answer: expensive</div><div>После less нужно прилагательное. Expensive = дорогой.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">3</div><div>
+          <div class="sentence">In spite of their age, they are quite <input class="answer-input" data-answer="successful" /> and professional.</div>
+          <div class="prompt">SUCCESS</div>
+          <div class="explanation"><div class="answer-line">Correct answer: successful</div><div>Нужно прилагательное после are. Successful = успешный.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">4</div><div>
+          <div class="sentence">Ben Collins started his own online company when he was <input class="answer-input" data-answer="really" /> young.</div>
+          <div class="prompt">REAL</div>
+          <div class="explanation"><div class="answer-line">Correct answer: really</div><div>Нужно наречие перед young. Really = очень, действительно.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">5</div><div>
+          <div class="sentence">He says, “My business is <input class="answer-input" data-answer="international" /> - we work with people from different countries.”</div>
+          <div class="prompt">NATIONAL</div>
+          <div class="explanation"><div class="answer-line">Correct answer: international</div><div>По смыслу нужна приставка inter-. International = международный.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">6</div><div>
+          <div class="sentence">In a real office, some people would <input class="answer-input" data-answer="disagree" /> that someone of my age could be a boss...</div>
+          <div class="prompt">AGREE</div>
+          <div class="explanation"><div class="answer-line">Correct answer: disagree</div><div>По смыслу нужна отрицательная форма: disagree = не соглашаться.</div></div>
+        </div></div></div>
+
+        <div class="section-controls"><div class="buttons">
+          <button class="check-btn primary">Check answers</button>
+          <button class="show-btn secondary">Show explanations</button>
+          <button class="reset-btn ghost">Reset page</button>
+        </div></div>
+      </section>
+
+      <section class="section" data-section="3">
+        <h2 class="section-title">Charity Shop</h2>
+
+        <div class="task"><div class="task-top"><div class="num">1</div><div>
+          <div class="sentence">It was an <input class="answer-input" data-answer="unusual" /> job for me - I had never been involved with charities.</div>
+          <div class="prompt">USUAL</div>
+          <div class="explanation"><div class="answer-line">Correct answer: unusual</div><div>По смыслу нужна отрицательная форма: unusual = необычный.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">2</div><div>
+          <div class="sentence">Our shop raised money to provide medical care for anyone suffering from any <input class="answer-input" data-answer="illness" />.</div>
+          <div class="prompt">ILL</div>
+          <div class="explanation"><div class="answer-line">Correct answer: illness</div><div>После from any нужно существительное. Illness = болезнь.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">3</div><div>
+          <div class="sentence">Their <input class="answer-input" data-answer="friendliness" /> and support meant a lot to me.</div>
+          <div class="prompt">FRIEND</div>
+          <div class="explanation"><div class="answer-line">Correct answer: friendliness</div><div>Нужно существительное: friendliness = дружелюбие.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">4</div><div>
+          <div class="sentence">Andrew, my boss and <input class="answer-input" data-answer="manager" />, was a smart and well-organized person.</div>
+          <div class="prompt">MANAGE</div>
+          <div class="explanation"><div class="answer-line">Correct answer: manager</div><div>Нужно существительное, обозначающее человека по должности. Manager = менеджер, руководитель.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">5</div><div>
+          <div class="sentence">We had no right to be indifferent or <input class="answer-input" data-answer="careless" /> because people’s lives depended on us.</div>
+          <div class="prompt">CARE</div>
+          <div class="explanation"><div class="answer-line">Correct answer: careless</div><div>После indifferent or нужно прилагательное. Careless = небрежный, безответственный.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">6</div><div>
+          <div class="sentence">Volunteering has equipped me with experience which I’m sure will be <input class="answer-input" data-answer="useful" /> for my future.</div>
+          <div class="prompt">USE</div>
+          <div class="explanation"><div class="answer-line">Correct answer: useful</div><div>После will be нужно прилагательное. Useful = полезный.</div></div>
+        </div></div></div>
+
+        <div class="section-controls"><div class="buttons">
+          <button class="check-btn primary">Check answers</button>
+          <button class="show-btn secondary">Show explanations</button>
+          <button class="reset-btn ghost">Reset page</button>
+        </div></div>
+      </section>
+
+      <section class="section" data-section="4">
+        <h2 class="section-title">Mood and Chocolate</h2>
+
+        <div class="task"><div class="task-top"><div class="num">1</div><div>
+          <div class="sentence">If you feel down and <input class="answer-input" data-answer="sleepy" />, just get a bar of dark chocolate from the fridge.</div>
+          <div class="prompt">SLEEP</div>
+          <div class="explanation"><div class="answer-line">Correct answer: sleepy</div><div>Нужно прилагательное после feel. Sleepy = сонный.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">2</div><div>
+          <div class="sentence">Chocolate will improve your mood and you’ll feel <input class="answer-input" data-answer="cheerful" /> and happy again.</div>
+          <div class="prompt">CHEER</div>
+          <div class="explanation"><div class="answer-line">Correct answer: cheerful</div><div>Нужно прилагательное после feel. Cheerful = весёлый.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">3</div><div>
+          <div class="sentence">This <input class="answer-input" data-answer="information" /> is often used in chocolate adverts.</div>
+          <div class="prompt">INFORM</div>
+          <div class="explanation"><div class="answer-line">Correct answer: information</div><div>Нужно существительное. Information = информация.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">4</div><div>
+          <div class="sentence">Meanwhile chocolate is not <input class="answer-input" data-answer="harmless" /> food.</div>
+          <div class="prompt">HARM</div>
+          <div class="explanation"><div class="answer-line">Correct answer: harmless</div><div>Здесь обычно употребляется harmless food = безвредная еда. По смыслу автор дальше объясняет, что шоколад не совсем полезен, но в word formation чаще ожидают harmless от harm.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">5</div><div>
+          <div class="sentence">Some people may also be allergic to chocolate and it can affect their <input class="answer-input" data-answer="appearance" />.</div>
+          <div class="prompt">APPEAR</div>
+          <div class="explanation"><div class="answer-line">Correct answer: appearance</div><div>Нужно существительное после affect their. Appearance = внешность.</div></div>
+        </div></div></div>
+
+        <div class="task"><div class="task-top"><div class="num">6</div><div>
+          <div class="sentence">The alternative and <input class="answer-input" data-answer="absolutely" /> safe method to fight depression is doing sport.</div>
+          <div class="prompt">ABSOLUTE</div>
+          <div class="explanation"><div class="answer-line">Correct answer: absolutely</div><div>Нужно наречие перед safe. Absolutely = абсолютно.</div></div>
+        </div></div></div>
+
+        <div class="section-controls"><div class="buttons">
+          <button class="check-btn primary">Check answers</button>
+          <button class="show-btn secondary">Show explanations</button>
+          <button class="reset-btn ghost">Reset page</button>
+        </div></div>
+      </section>
+    </div>
+
+    <div class="nav-controls" style="padding: 0 16px 16px;">
+      <div class="buttons">
+        <button id="backBtn" class="ghost">Back</button>
+        <button id="nextBtn" class="primary">Next</button>
+      </div>
+      <div class="result" id="resultText">Fill in the answers and check yourself.</div>
+    </div>
+
+    <div class="footer-note">
+      Подсказка: сначала попробуй выполнить задания сам, потом нажми <b>Check answers</b>. После проверки появятся короткие пояснения по каждому слову.
+    </div>
+  </div>
+
+  <script>
+    const sections = Array.from(document.querySelectorAll('.section'));
+    const pageCounter = document.getElementById('pageCounter');
+    const pageResult = document.getElementById('pageResult');
+    const resultText = document.getElementById('resultText');
+    const backBtn = document.getElementById('backBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentPage = 0;
+
+    function normalize(text) {
+      return text.trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    function updateNav() {
+      sections.forEach((sec, i) => sec.classList.toggle('active', i === currentPage));
+      pageCounter.textContent = `Page ${currentPage + 1} / ${sections.length}`;
+      backBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === sections.length - 1;
+      updatePageResult();
+    }
+
+    function updatePageResult() {
+      const section = sections[currentPage];
+      const inputs = Array.from(section.querySelectorAll('.answer-input'));
+      const correct = inputs.filter(i => i.classList.contains('correct')).length;
+      pageResult.textContent = `Score: ${correct} / ${inputs.length}`;
+    }
+
+    function checkSection(section) {
+      const inputs = Array.from(section.querySelectorAll('.answer-input'));
+      let correct = 0;
+      inputs.forEach(input => {
+        const value = normalize(input.value);
+        const answer = normalize(input.dataset.answer);
+        input.classList.remove('correct', 'wrong');
+        if (!value) {
+          input.classList.add('wrong');
+        } else if (value === answer) {
+          input.classList.add('correct');
+          correct++;
+        } else {
+          input.classList.add('wrong');
+        }
+        input.closest('.task').querySelector('.explanation').classList.add('visible');
+      });
+      resultText.textContent = `Result: ${correct} / ${inputs.length}`;
+      updatePageResult();
+    }
+
+    function showSection(section) {
+      section.querySelectorAll('.explanation').forEach(el => el.classList.add('visible'));
+    }
+
+    function resetSection(section) {
+      section.querySelectorAll('.answer-input').forEach(input => {
+        input.value = '';
+        input.classList.remove('correct', 'wrong');
+      });
+      section.querySelectorAll('.explanation').forEach(el => el.classList.remove('visible'));
+      resultText.textContent = 'Fill in the answers and check yourself.';
+      updatePageResult();
+    }
+
+    sections.forEach(section => {
+      section.querySelector('.check-btn').addEventListener('click', () => checkSection(section));
+      section.querySelector('.show-btn').addEventListener('click', () => showSection(section));
+      section.querySelector('.reset-btn').addEventListener('click', () => resetSection(section));
+    });
+
+    backBtn.addEventListener('click', () => {
+      if (currentPage > 0) {
+        currentPage--;
+        updateNav();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentPage < sections.length - 1) {
+        currentPage++;
+        updateNav();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    updateNav();
+  </script>
+</body>
+</html>

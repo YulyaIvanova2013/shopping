@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Electronic Assistant — OGE Speaking Task 2</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --bg1: #f6fbff;
+      --bg2: #eef4ff;
+      --card: #ffffff;
+      --line: #d7e3ff;
+      --accent: #4e7cff;
+      --accent2: #6a5cff;
+      --accent3: #ffb347;
+      --text: #22314f;
+      --muted: #5b6b8d;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%);
+    }
+    body {
+      min-height: 100vh;
+      padding: 8px;
+    }
+    .wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      background: var(--card);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 2px solid var(--line);
+      box-shadow: 0 12px 28px rgba(71, 89, 165, 0.14);
+    }
+    .header {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      color: #fff;
+      padding: 16px 14px 14px;
+    }
+    .header h1 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+    .header p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.45;
+      opacity: 0.98;
+    }
+    .content {
+      padding: 10px;
+    }
+    .intro {
+      background: linear-gradient(180deg, #fff9d8 0%, #ffe89a 100%);
+      border: 2px solid #ffd561;
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+    .topbar {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .pill {
+      background: #eef2ff;
+      border: 2px solid #d9e0ff;
+      color: #4251b8;
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-size: 14px;
+      font-weight: 800;
+      width: fit-content;
+      max-width: 100%;
+    }
+    .section {
+      display: none;
+      background: linear-gradient(180deg, #fcfdff 0%, #f7f8ff 100%);
+      border: 2px solid #dfe5ff;
+      border-radius: 16px;
+      padding: 10px;
+      margin-bottom: 12px;
+    }
+    .section.active { display: block; }
+    .section-title {
+      display: inline-block;
+      margin: 0 0 12px;
+      padding: 9px 12px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent3) 0%, #ff8f66 100%);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    .task-card {
+      background: #fff;
+      border: 2px solid #e3e7ff;
+      border-radius: 14px;
+      padding: 12px;
+    }
+    .label {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: #f2edff;
+      border: 2px solid #e0d5ff;
+      color: #6b4fd8;
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .task-text {
+      font-size: 15px;
+      line-height: 1.65;
+      font-weight: 700;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+    }
+    .questions {
+      margin: 12px 0 0;
+      padding-left: 20px;
+    }
+    .questions li {
+      margin-bottom: 10px;
+    }
+    .nav-controls {
+      padding: 0 10px 10px;
+    }
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 14px;
+      padding: 14px 16px;
+      min-height: 48px;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .primary {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(91, 108, 255, 0.2);
+    }
+    .ghost {
+      background: #eef2ff;
+      color: #48558f;
+      border: 2px solid #d8e0ff;
+    }
+    button:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+    }
+    .footer-note {
+      margin: 0 10px 10px;
+      background: #f5f0ff;
+      border: 2px solid #e2d7ff;
+      border-radius: 14px;
+      padding: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--muted);
+      font-weight: 700;
+    }
+    @media (min-width: 640px) {
+      body { padding: 12px; }
+      .wrap { border-radius: 22px; }
+      .header { padding: 20px 18px 16px; }
+      .header h1 { font-size: 28px; }
+      .header p { font-size: 15px; }
+      .content { padding: 16px; }
+      .intro { font-size: 15px; padding: 14px; border-radius: 16px; }
+      .topbar { flex-direction: row; flex-wrap: wrap; }
+      .section { padding: 14px; border-radius: 20px; }
+      .section-title { font-size: 20px; }
+      .task-card { border-radius: 18px; padding: 14px; }
+      .task-text { font-size: 17px; }
+      .buttons { flex-direction: row; }
+      button { width: auto; min-width: 140px; font-size: 16px; }
+      .footer-note { font-size: 15px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="header">
+      <h1>Electronic Assistant</h1>
+      <p>ОГЭ · Устная часть · Задание 2</p>
+    </div>
+
+    <div class="content">
+      <div class="intro">
+        You are going to take part in a telephone survey. You have to answer six questions. Give full answers to the questions. Remember that you have 40 seconds to answer each question.
+      </div>
+
+      <div class="topbar">
+        <div class="pill" id="pageCounter">Page 1 / 2</div>
+        <div class="pill">6 questions</div>
+        <div class="pill">40 seconds each</div>
+      </div>
+
+      <section class="section active">
+        <h2 class="section-title">Shopping and shopping centres</h2>
+        <div class="task-card">
+          <div class="label">Task 2</div>
+          <div class="task-text">
+            Hello! It’s the electronic assistant of Teenage Magazine online. We kindly ask you to take part in our survey. We would like to find out how teenagers feel about shopping and shopping centres. Please answer six questions. The survey is anonymous – you don’t have to give your name. So, let’s get started.
+            <ol class="questions">
+              <li>Who usually does the shopping in your family?</li>
+              <li>What can you buy in your nearest shopping centre?</li>
+              <li>How often do you usually go shopping?</li>
+              <li>Why are shopping centres so popular nowadays?</li>
+              <li>Why do some people hate shopping?</li>
+              <li>What time would you recommend for busy people should go shopping?</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <h2 class="section-title">Shopping and clothes</h2>
+        <div class="task-card">
+          <div class="label">Task 2</div>
+          <div class="task-text">
+            Hello! It’s the electronic assistant of Teenage Magazine online. We kindly ask you to take part in our survey. We would like to find out how teenagers feel about shopping and clothes. Please answer six questions. The survey is anonymous – you don’t have to give your name. So, let’s get started.
+            <ol class="questions">
+              <li>What colour of clothes do you prefer wearing?</li>
+              <li>What clothes do you usually wear?</li>
+              <li>How often do you go shopping for clothes?</li>
+              <li>Who do you usually go shopping with?</li>
+              <li>Do you have to wear a school uniform? If so, what is it like?</li>
+              <li>Does a career as a fashion designer attract you or not? Why?</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div class="nav-controls">
+      <div class="buttons">
+        <button id="backBtn" class="ghost">Back</button>
+        <button id="nextBtn" class="primary">Next</button>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Одно задание — одна страница.
+    </div>
+  </div>
+
+  <script>
+    const sections = Array.from(document.querySelectorAll('.section'));
+    const pageCounter = document.getElementById('pageCounter');
+    const backBtn = document.getElementById('backBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let currentPage = 0;
+
+    function updateNav() {
+      sections.forEach((section, index) => section.classList.toggle('active', index === currentPage));
+      pageCounter.textContent = `Page ${currentPage + 1} / ${sections.length}`;
+      backBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === sections.length - 1;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    backBtn.addEventListener('click', () => {
+      if (currentPage > 0) {
+        currentPage--;
+        updateNav();
+      }
+    });
+
+    nextBtn.addEventListener('click', () => {
+      if (currentPage < sections.length - 1) {
+        currentPage++;
+        updateNav();
+      }
+    });
+
+    updateNav();
+  </script>
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopping Tasks</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle, rgba(72, 103, 255, 0.18) 1px, transparent 1px);
+      background-size: 22px 22px;
+      background-color: #f4f6ff;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: #ffffff;
+      min-height: 100vh;
+      border-left: 3px solid #5b6fdc;
+      border-right: 3px solid #5b6fdc;
+      padding: 22px 28px 40px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      border: none;
+      background: #d9deef;
+      color: #16306d;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.2;
+      padding: 15px 22px;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(39, 58, 122, 0.12);
+      transition: 0.2s ease;
+      min-height: 50px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: #cfd6ee;
+    }
+
+    .btn.active {
+      background: linear-gradient(90deg, #4d87ff, #2563eb);
+      color: #ffffff;
+      box-shadow: 0 8px 16px rgba(37, 99, 235, 0.28);
+    }
+
+    .row-break {
+      flex-basis: 100%;
+      height: 0;
+    }
+
+    .panel {
+      background: #dfe4f8;
+      border-radius: 22px;
+      padding: 18px;
+      min-height: 620px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    .task-frame {
+      width: 100%;
+      height: 580px;
+      border: none;
+      border-radius: 16px;
+      background: #ffffff;
+    }
+
+    .placeholder {
+      height: 580px;
+      border-radius: 16px;
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 28px;
+    }
+
+    .placeholder-card {
+      width: 76%;
+      max-width: 820px;
+      background: #ffffff;
+      border: 3px solid #d9deef;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow:
+        0 10px 24px rgba(39, 58, 122, 0.10),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .placeholder-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .page {
+        padding: 18px 14px 24px;
+      }
+
+      .btn {
+        font-size: 14px;
+        padding: 13px 16px;
+      }
+
+      .panel {
+        min-height: 520px;
+      }
+
+      .task-frame,
+      .placeholder {
+        height: 480px;
+      }
+
+      .placeholder {
+        padding: 18px;
+      }
+
+      .placeholder-card {
+        width: 92%;
+        padding: 12px;
+        border-radius: 18px;
+      }
+
+      .placeholder-card img {
+        border-radius: 12px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .buttons {
+        gap: 10px;
+      }
+
+      .btn {
+        width: 100%;
+        max-width: 320px;
+      }
+
+      .task-frame,
+      .placeholder {
+        height: 420px;
+      }
+
+      .placeholder-card {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <div class="buttons">
+      <button class="btn" data-file="tasks/jeans.html">
+        Text True False Not Stated Jeans
+      </button>
+
+      <button class="btn" data-file="tasks/moneyless_man.html">
+        Text True False Not Stated Moneyless Man
+      </button>
+
+      <button class="btn" data-file="tasks/grammar.html">
+        Grammar
+      </button>
+
+      <button class="btn" data-file="tasks/word_formation.html">
+        Word Formation
+      </button>
+
+      <button class="btn" data-file="tasks/email.html">
+        Email
+      </button>
+
+      <div class="row-break"></div>
+
+      <button class="btn" data-file="tasks/electronic_assistant.html">
+        Electronic Assistant
+      </button>
+
+      <button class="btn" data-file="tasks/monologue_pocket_money.html">
+        Monologue
+      </button>
+    </div>
+
+    <div class="panel">
+      <div class="placeholder" id="placeholder">
+        <div class="placeholder-card">
+          <img src="image/1.jpg" alt="Выбери задание">
+        </div>
+      </div>
+
+      <iframe
+        id="taskFrame"
+        class="task-frame"
+        src=""
+        style="display: none;"
+        title="Task Viewer">
+      </iframe>
+    </div>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.btn');
+    const frame = document.getElementById('taskFrame');
+    const placeholder = document.getElementById('placeholder');
+
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        buttons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const file = button.getAttribute('data-file');
+        frame.src = file;
+        frame.style.display = 'block';
+        placeholder.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>

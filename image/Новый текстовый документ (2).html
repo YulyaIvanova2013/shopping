@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shopping Tasks</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle, rgba(72,103,255,0.18) 1px, transparent 1px);
+      background-size: 22px 22px;
+      background-color: #f4f6ff;
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 1180px;
+      margin: 0 auto;
+      background: #fff;
+      min-height: 100vh;
+      border-left: 3px solid #5b6fdc;
+      border-right: 3px solid #5b6fdc;
+      padding: 22px 28px 40px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .btn {
+      border: none;
+      background: #d9deef;
+      color: #16306d;
+      font-weight: 700;
+      font-size: 15px;
+      padding: 15px 22px;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 0 6px 14px rgba(39,58,122,0.12);
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      background: #cfd6ee;
+    }
+
+    .btn.active {
+      background: linear-gradient(90deg, #4d87ff, #2563eb);
+      color: #fff;
+    }
+
+    .row-break {
+      flex-basis: 100%;
+      height: 0;
+    }
+
+    .panel {
+      background: #dfe4f8;
+      border-radius: 22px;
+      padding: 18px;
+      min-height: 620px;
+    }
+
+    .task-frame {
+      width: 100%;
+      height: 580px;
+      border: none;
+      border-radius: 16px;
+      background: #fff;
+    }
+
+    .placeholder {
+      height: 580px;
+      border-radius: 16px;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .placeholder img {
+      max-width: 100%;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .btn { font-size: 14px; padding: 13px 16px; }
+      .panel { min-height: 520px; }
+      .task-frame, .placeholder { height: 480px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+
+  <div class="buttons">
+
+    <!-- 🔥 НОВАЯ КНОПКА -->
+    <button class="btn" data-file="tasks/jeans.html">
+      Text True False Not Stated Jeans
+    </button>
+
+    <button class="btn" data-file="tasks/moneyless_man.html">
+      Text True False Not Stated Moneyless Man
+    </button>
+
+    <button class="btn" data-file="tasks/grammar.html">
+      Grammar
+    </button>
+
+    <button class="btn" data-file="tasks/word_formation.html">
+      Word Formation
+    </button>
+
+    <button class="btn" data-file="tasks/email.html">
+      Email
+    </button>
+
+    <div class="row-break"></div>
+
+    <button class="btn" data-file="tasks/electronic_assistant.html">
+      Electronic Assistant
+    </button>
+
+    <button class="btn" data-file="tasks/monologue_pocket_money.html">
+      Monologue
+    </button>
+
+  </div>
+
+  <div class="panel">
+
+    <!-- 🔥 КАРТИНКА ВМЕСТО ТЕКСТА -->
+    <div class="placeholder" id="placeholder">
+      <img src="image/1.png" alt="Выбери задание">
+    </div>
+
+    <iframe id="taskFrame" class="task-frame" style="display:none;"></iframe>
+
+  </div>
+
+</div>
+
+<script>
+  const buttons = document.querySelectorAll('.btn');
+  const frame = document.getElementById('taskFrame');
+  const placeholder = document.getElementById('placeholder');
+
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      buttons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+
+      frame.src = button.dataset.file;
+      frame.style.display = 'block';
+      placeholder.style.display = 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
